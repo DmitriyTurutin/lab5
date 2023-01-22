@@ -1,0 +1,51 @@
+---
+title: "Лабораторная работа №5 по R" 
+author: "Турутин Дмитрий ФН11-33Б"
+date: "20/12/2022"
+output:
+    html_document:
+        toc: yes
+---
+
+# Задание 1
+```{r}
+mean(ToothGrowth[ToothGrowth$supp == 'OJ' & ToothGrowth$dose == 0.5, 1])
+
+mean(ToothGrowth[ToothGrowth$supp == 'VC' & ToothGrowth$dose == 2, 1])
+
+t_stat <- t.test(ToothGrowth[ToothGrowth$supp == 'OJ' & ToothGrowth$dose == 0.5, 1],
+ToothGrowth[ToothGrowth$supp == 'VC' & ToothGrowth$dose == 2, 1])$statistic
+
+t_stat
+
+barplot(height=tapply(ToothGrowth$len, list(ToothGrowth$supp, ToothGrowth$dose), mean), xlab = 'dose', ylab
+= 'length', legend = TRUE)
+```
+
+# Задание 2
+```{r}
+data <- read.csv('lekarstva.csv')
+head(data)
+
+
+after <- data$Pressure_after
+before <- data$Pressure_before
+t.test(before, after, paired = T)
+```
+# Задание 3 
+```{r}
+df <- read.table("dataset_11504_15.txt")
+
+if (bartlett.test(df)$p.value < 0.05) {
+    Q <- wilcox.test(V1 ~ V2, df)$p.value
+} else {
+    Q <- t.test(V1 ~ V2, df, var.equal = T)$p.value
+}
+Q
+```
+# Задание 4
+```{r}
+df <- read.table("dataset_11504_16.txt")
+head(df)
+t.test(df$V1, df$V2, var.equal = F)
+```
